@@ -248,7 +248,7 @@ export default class QuizPanel{
 
         const plane = BABYLON.MeshBuilder.CreatePlane("quizPlane", { width: 10, height: 10}, scene);
         this.plane = plane;
-        plane.position = new BABYLON.Vector3(0, 2, 0); 
+        plane.position = new BABYLON.Vector3(0, 1, 0); 
 
         const planeUI = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
 

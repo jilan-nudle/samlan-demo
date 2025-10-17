@@ -34,7 +34,7 @@ class IntroScene extends BaseState {
 
     async enter(engine) {
 
-        const introScreen = new DialogScreen("assets/media/overview-image.png", "Samlan", "Samlan is a purpose-led organisation, with all our efforts centred on helping our clients live with confidence. We promote financial inclusion, transformation and empowerment through our broad product and financial advice offering, inclusive culture and partnership approach.", "START EXPERIENCE");
+        const introScreen = new DialogScreen("assets/media/overview-image.png", "sanlam", "sanlam is a purpose-led organisation, with all our efforts centred on helping our clients live with confidence. We promote financial inclusion, transformation and empowerment through our broad product and financial advice offering, inclusive culture and partnership approach.", "START EXPERIENCE");
 
         introScreen.attachEvent(() => {
             engine.goTo("Overview");
@@ -73,7 +73,7 @@ class OverviewScene extends BaseState {
         engine.context.topMenu.setCaption("Sometimes life changes in an instant. A family’s peace can turn into struggle overnight. With protection in place, even in the hardest storms, hope doesn’t have to fade. Insurance helps you stand strong when life brings the unexpected.");
         engine.context.topMenu.disableAdditionalButtons(true);
 
-        engine.context.topMenu.maximizeCaption();
+        engine.context.topMenu.minimizeCaption();
 
         const xrManager = new XRChangeManager(engine.context.xr);
         const x3dscale = 0.6;
@@ -150,7 +150,8 @@ class Slide1Scene extends BaseState {
     }
 
     async enter(engine) {
-        engine.context.topMenu.setVisible(false);
+        engine.context.topMenu.setVisible(true);
+        engine.context.topMenu.minimizeCaption(true);
 
         const xrManager = new XRChangeManager(engine.context.xr);
         const x3dscale = 0.6;
@@ -159,27 +160,6 @@ class Slide1Scene extends BaseState {
         // rotation object 90 degrees
         engine.context.mainObject2.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, -Math.PI / 2, 0);
 
-        let data = {
-            question: "How quickly does Sanlam pay most funeral claims?",
-            correct: "Within 4 hours" ,
-            wrong: [
-                "Within 24 hours",
-                "Within a week"
-            ]
-        };
-
-        const quiz = new QuizPanel(engine.context.scene, data);
-        this.quiz = quiz;
-        quiz.getRoot().parent = engine.context.mainObject2.getRoot();
-
-        quiz.setNextButton(() => {
-            const current = engine.current?.name;
-            const stateNames = Array.from(engine.states.keys());
-            let index = stateNames.indexOf(current);
-            if (index >= 0 && index < stateNames.length - 1) {
-                engine.goTo(stateNames[index + 1]);
-            }
-        });
 
         xrManager.inAR = () => {
             engine.context.isARPlaced = true;
@@ -193,9 +173,6 @@ class Slide1Scene extends BaseState {
 
             engine.context.root.scaling = new BABYLON.Vector3(arScale, arScale, arScale);
 
-            // setting quiz scale
-            quiz.setScale(1.5 / 14);
-
 
         }
 
@@ -208,9 +185,6 @@ class Slide1Scene extends BaseState {
 
             engine.context.root.scaling = new BABYLON.Vector3(x3dscale, x3dscale, x3dscale);
             engine.context.root.position.y = -1.5;
-
-            // setting quiz scale
-            quiz.setScale(1.5);
 
         }
 
@@ -234,7 +208,6 @@ class Slide1Scene extends BaseState {
 
         // Disabling the additonal options.
         engine.context.topMenu.disableAdditionalButtons(true);
-        this.quiz.getRoot().dispose();
 
     }
 
@@ -254,7 +227,8 @@ class Slide2Scene extends BaseState {
         const arScale = x3dscale / 14;
 
         // rotation object 90 degrees
-        engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, -Math.PI / 2, 0);
+        
+        
 
         let data = {
             question: "What is Sanlam's motto and promise?",
@@ -268,6 +242,7 @@ class Slide2Scene extends BaseState {
         const quiz = new QuizPanel(engine.context.scene, data);
         this.quiz = quiz;
         quiz.getRoot().parent = engine.context.mainObject3.getRoot();
+        quiz.getRoot().rotation.y = Math.PI;
 
         quiz.setNextButton(() => {
             const current = engine.current?.name;
@@ -436,7 +411,7 @@ class Slide4Scene extends BaseState {
         const arScale = x3dscale / 14;
 
         // rotation object 90 degrees
-        engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, -Math.PI / 2, 0);
+        //engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, -Math.PI / 2, 0);
 
         let data = {
             question: "With Sanlam what can you expect?",
@@ -600,7 +575,7 @@ class ConcludeScene extends BaseState {
     }
 
     async enter(engine) {
-        const endScreen = new DialogScreen("assets/media/overview-image.png", "Samlan", "Congratulations! You've completed the Sanlam Funeral Cover Story.", "END EXPERIENCE");
+        const endScreen = new DialogScreen("assets/media/overview-image.png", "Sanlam", "Congratulations! You've completed the Sanlam Funeral Cover Story.", "END EXPERIENCE");
 
         endScreen.attachEvent(() => {
             window.location.href = window.location.href;
@@ -651,7 +626,7 @@ var createScene = async function () {
     // Apply material
     skybox.material = skyboxMaterial;
 
-    var camera = new BABYLON.ArcRotateCamera("camera1", 0, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("camera1", 0, Math.PI / 2, 7, BABYLON.Vector3.Zero(), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
 
@@ -685,7 +660,7 @@ var createScene = async function () {
     TOPMENU.disableAdditionalButtons(true);
 
 
-    const MAINOBJECT = new SceneObject("https://raw.githubusercontent.com/jilan-nudle/JilansGlbArchive/main/SanlamScene4.glb", scene);
+    const MAINOBJECT = new SceneObject("https://raw.githubusercontent.com/jilan-nudle/JilansGlbArchive/main/SanlamScene4_new.compressed.glb", scene);
     await MAINOBJECT.loadObject();
     MAINOBJECT.setVisible(false);
     MAINOBJECT.setParent(ROOT);
@@ -695,10 +670,13 @@ var createScene = async function () {
     MAINOBJECT2.setVisible(false);
     MAINOBJECT2.setParent(ROOT);
 
-    const MAINOBJECT3 = new SceneObject("https://raw.githubusercontent.com/jilan-nudle/JilansGlbArchive/main/SanlamScene6.glb", scene);
+    const MAINOBJECT3 = new SceneObject("https://raw.githubusercontent.com/jilan-nudle/JilansGlbArchive/main/SanlamScene6_new.glb", scene);
     await MAINOBJECT3.loadObject();
     MAINOBJECT3.setVisible(false);
     MAINOBJECT3.setParent(ROOT);
+
+    MAINOBJECT3.getRoot().scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+    MAINOBJECT3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, Math.PI / 2, 0);
 
 
     // attaching virtual shadow
@@ -746,7 +724,7 @@ var createScene = async function () {
             advancedTexture: ADVANCEDTEXTURE, topMenu: TOPMENU, xr: XR, babylonEngine: engine,
             root: ROOT, scene: scene, mainObject: MAINOBJECT, dot: DOT, shadow: SHADOW,
             skybox: skybox, featureManager: FEATUREMANAGER, hitTest: HITTEST, isARPlaced: false,
-            uiScale: 1, mainObject2: MAINOBJECT2, mainObject3: MAINOBJECT3,
+            uiScale: 1, mainObject2: MAINOBJECT2, mainObject3: MAINOBJECT3, camera: camera,
         }
     });
 
