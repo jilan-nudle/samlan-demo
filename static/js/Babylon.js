@@ -285,7 +285,6 @@ class Slide2Scene extends BaseState {
 
             // setting quiz scale
             quiz.setScale(1.5);
-            quiz.getRoot().position.y = -1.5;
 
         }
 
