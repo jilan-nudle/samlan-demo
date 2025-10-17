@@ -239,6 +239,8 @@ class Slide2Scene extends BaseState {
             ]
         };
 
+        engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, Math.PI / 2, 0);
+
         const quiz = new QuizPanel(engine.context.scene, data);
         this.quiz = quiz;
         quiz.getRoot().parent = engine.context.mainObject3.getRoot();
@@ -283,6 +285,7 @@ class Slide2Scene extends BaseState {
 
             // setting quiz scale
             quiz.setScale(1.5);
+            quiz.getRoot().position.y = -1.5;
 
         }
 
@@ -334,6 +337,10 @@ class Slide3Scene extends BaseState {
         const quiz = new QuizPanel(engine.context.scene, data);
         this.quiz = quiz;
         quiz.getRoot().parent = engine.context.mainObject3.getRoot();
+
+        engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, Math.PI / 2, 0);
+        quiz.getRoot().rotation.y = Math.PI;
+
 
         quiz.setNextButton(() => {
             const current = engine.current?.name;
@@ -425,6 +432,9 @@ class Slide4Scene extends BaseState {
         const quiz = new QuizPanel(engine.context.scene, data);
         this.quiz = quiz;
         quiz.getRoot().parent = engine.context.mainObject3.getRoot();
+        
+        engine.context.mainObject3.getRoot().rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, Math.PI / 2, 0);
+        quiz.getRoot().rotation.y = Math.PI;
 
         quiz.setNextButton(() => {
             const current = engine.current?.name;
